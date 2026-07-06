@@ -198,7 +198,9 @@
     transform:translate(-50%,-100%);
     pointer-events:none;
     filter:drop-shadow(0 6px 8px rgba(43,38,32,.35));
+    transition:opacity .4s ease;
   }
+  .map-pin.hide{opacity:0}
   .map-pin svg{display:block;animation:float 2.4s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
   .map-foot{
@@ -588,6 +590,21 @@ const $ = s => document.querySelector(s);
 /* — enlaces — */
 $('#mapLink').href = MAPS_URL;
 $('#mapFrame').src = MAPS_EMBED;
+
+/* — el osito desaparece en cuanto tocan el mapa (al interactuar, el iframe
+   toma el foco de la página; no hay forma de ver el arrastre dentro de él) — */
+(function(){
+  const frame = $('#mapFrame');
+  const esMapa = () => document.activeElement === frame;
+  const ocultarOsito = () => {
+    $('.map-pin').classList.add('hide');
+    clearInterval(vigia);
+    window.removeEventListener('blur', alPerderFoco);
+  };
+  const alPerderFoco = () => { if (esMapa()) ocultarOsito(); };
+  window.addEventListener('blur', alPerderFoco);
+  const vigia = setInterval(() => { if (esMapa()) ocultarOsito(); }, 350);
+})();
 $('#waBtn').href = "https://wa.me/" + WA_NUMERO + "?text=" +
   encodeURIComponent("Hola 🧸 Deseo confirmar mi asistencia al Baby Shower de Franco 💙");
 
