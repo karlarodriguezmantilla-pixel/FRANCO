@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Baby Shower de Franco 🧸</title>
+<meta name="description" content="Te invitamos al Baby Shower de Franco — Sábado 22 de agosto, 4:00 PM">
+<meta property="og:title" content="Baby Shower de Franco 🧸">
+<meta property="og:description" content="Sábado 22 de agosto · 4:00 PM · ¡Te esperamos!">
+<meta property="og:image" content="https://karlarodriguezmantilla-pixel.github.io/FRANCO/assets/oso.png">
+<link rel="icon" href="assets/oso.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1b2a44;
+    --green:#1e3b2c;
+    --brown:#6f4e37;
+    --beige:#d9c7a7;
+    --cream:#faf6ee;
+    --ink:#2b2620;
+    --card:#ffffff;
+    --muted:#8a7f6e;
+    --ok:#1e3b2c;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --script:'Great Vibes',cursive;
+    --sans:'Jost',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+
+  /* ====== HERO (portada = diapositiva del PPTX) ====== */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    background:var(--navy) url('assets/tartan.png') center/cover no-repeat;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(18px,5vw,40px);
+    position:relative;
+  }
+  .hero-card{
+    background:var(--card);
+    width:min(420px,100%);
+    padding:14px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+  }
+  .hero-card-inner{
+    border:1.5px solid var(--navy);
+    outline:1.5px solid var(--navy);
+    outline-offset:3px;
+    padding:clamp(22px,7vw,36px) clamp(16px,6vw,30px);
+    text-align:center;
+  }
+  .hero-bear{
+    width:min(180px,52%);
+    margin:0 auto 6px;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,.18));
+  }
+  .hero-script{
+    font-family:var(--script);
+    font-size:clamp(2.6rem,12vw,3.4rem);
+    color:var(--brown);
+    line-height:1;
+    margin-top:6px;
+  }
+  .hero-name{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(2.2rem,11vw,3rem);
+    letter-spacing:.28em;
+    text-indent:.28em;
+    color:var(--navy);
+    margin-top:2px;
+  }
+  .hero-rule{
+    width:70px;height:1px;background:var(--beige);
+    margin:16px auto;position:relative;
+  }
+  .hero-rule::after{
+    content:'♥';position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-52%);
+    background:var(--card);padding:0 8px;
+    color:var(--brown);font-size:.7rem;
+  }
+  .hero-date{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    font-weight:600;
+    letter-spacing:.18em;
+    color:var(--green);
+    text-transform:uppercase;
+  }
+  .hero-time{
+    font-family:var(--serif);
+    font-size:1.05rem;
+    letter-spacing:.3em;
+    color:var(--ink);
+    margin-top:4px;
+  }
+  .hero-parents{
+    margin-top:16px;
+    font-family:var(--serif);
+    font-size:1.12rem;
+    font-weight:600;
+    color:var(--brown);
+    line-height:1.35;
+  }
+  .hero-parents span{
+    display:block;
+    font-family:var(--script);
+    font-size:1.5rem;
+    font-weight:400;
+    color:var(--muted);
+    margin-bottom:2px;
+  }
+  .hero-parents i{
+    font-weight:400;
+    color:var(--muted);
+  }
+  .hero-countdown{
+    display:inline-block;
+    margin-top:14px;
+    font-size:.78rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--brown);
+    border:1px solid var(--beige);
+    border-radius:999px;
+    padding:6px 16px;
+  }
+  .hero-wait{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--muted);
+    margin-top:14px;
+  }
+  .scroll-hint{
+    position:absolute;
+    bottom:calc(14px + env(safe-area-inset-bottom));
+    left:50%;transform:translateX(-50%);
+    color:#fff;opacity:.85;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    text-align:center;text-decoration:none;
+  }
+  .scroll-hint span{
+    display:block;font-size:1.2rem;margin-top:2px;
+    animation:bob 1.6s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ====== SECCIONES ====== */
+  section{padding:clamp(52px,12vw,84px) 20px;max-width:560px;margin:0 auto}
+  .sec-kicker{
+    font-family:var(--script);
+    font-size:2rem;color:var(--brown);
+    text-align:center;line-height:1;
+  }
+  .sec-title{
+    font-family:var(--serif);
+    font-size:clamp(1.5rem,6.5vw,1.9rem);
+    font-weight:700;letter-spacing:.16em;text-indent:.16em;
+    text-transform:uppercase;color:var(--navy);
+    text-align:center;margin-top:6px;
+  }
+  .sec-sub{
+    text-align:center;color:var(--muted);
+    font-weight:300;font-size:.95rem;
+    margin:10px auto 0;max-width:40ch;
+  }
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ====== MAPA ====== */
+  .map-wrap{
+    margin-top:26px;border-radius:18px;overflow:hidden;
+    box-shadow:0 14px 36px rgba(27,42,68,.16);
+    display:block;text-decoration:none;
+    border:1px solid #e6ddcc;background:#fff;
+  }
+  .map-svg{display:block;width:100%;height:auto}
+  .map-foot{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;background:#fff;
+  }
+  .map-foot .pin-ico{flex:none}
+  .map-foot b{
+    font-family:var(--serif);font-size:1.02rem;color:var(--navy);
+    display:block;font-weight:700;
+  }
+  .map-foot small{color:var(--muted);font-size:.8rem}
+  .map-foot .go{
+    margin-left:auto;flex:none;
+    background:var(--navy);color:#fff;
+    font-size:.75rem;letter-spacing:.08em;
+    padding:9px 14px;border-radius:999px;
+  }
+  @keyframes pulse{
+    0%{r:10px;opacity:.55}
+    100%{r:26px;opacity:0}
+  }
+  .pulse{animation:pulse 2s ease-out infinite;transform-origin:center}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .pin-float{animation:float 2.4s ease-in-out infinite}
+
+  /* ====== DRESS CODE ====== */
+  .palette{
+    display:flex;justify-content:center;gap:clamp(10px,4vw,20px);
+    margin-top:30px;flex-wrap:wrap;
+  }
+  .swatch{text-align:center;width:72px}
+  .swatch i{
+    display:block;width:62px;height:62px;margin:0 auto;
+    border-radius:50%;
+    box-shadow:inset 0 0 0 3px #fff, inset 0 0 0 4px rgba(0,0,0,.08), 0 8px 18px rgba(43,38,32,.22);
+  }
+  .swatch span{
+    display:block;margin-top:9px;
+    font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .dress-note{
+    margin:28px auto 0;max-width:42ch;text-align:center;
+    font-family:var(--serif);font-style:italic;
+    font-size:1.05rem;color:var(--ink);
+  }
+
+  /* ====== REGALOS ====== */
+  #regalos{max-width:620px}
+  .cats{
+    display:flex;gap:8px;overflow-x:auto;
+    padding:24px 2px 6px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .cats::-webkit-scrollbar{display:none}
+  .cat{
+    flex:none;border:1px solid var(--beige);
+    background:#fff;color:var(--brown);
+    font-family:var(--sans);font-size:.78rem;letter-spacing:.06em;
+    padding:8px 15px;border-radius:999px;cursor:pointer;
+    transition:all .2s;
+  }
+  .cat.on{background:var(--green);border-color:var(--green);color:#fff}
+  .gifts{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+  .gift{
+    background:#fff;border:1px solid #eee5d5;border-radius:14px;
+    padding:15px 16px;
+    display:flex;flex-direction:column;gap:9px;
+    transition:opacity .3s;
+  }
+  .gift-top{display:flex;align-items:flex-start;gap:10px}
+  .gift-name{
+    font-family:var(--serif);font-weight:600;font-size:1.02rem;
+    color:var(--ink);line-height:1.25;flex:1;
+  }
+  .tag{
+    flex:none;font-size:.62rem;letter-spacing:.1em;
+    padding:4px 10px;border-radius:999px;
+    text-transform:uppercase;margin-top:2px;
+  }
+  .tag.libre{background:#eef4ea;color:var(--green)}
+  .tag.tomado{background:#f2ece2;color:var(--muted)}
+  .gift-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .gift-cat{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--beige)}
+  .gift-link{
+    font-size:.8rem;color:var(--brown);text-decoration:none;
+    border-bottom:1px dotted var(--beige);
+  }
+  .gift-btn{
+    margin-left:auto;
+    background:none;border:1px solid var(--green);color:var(--green);
+    font-family:var(--sans);font-size:.78rem;letter-spacing:.05em;
+    padding:8px 14px;border-radius:999px;cursor:pointer;
+    transition:all .2s;
+  }
+  .gift-btn:active{background:var(--green);color:#fff}
+  .gift.tomado{opacity:.62}
+  .gift.tomado .gift-name{text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--muted)}
+  .gift-sep-note{font-size:.78rem;color:var(--muted);font-style:italic;margin-left:auto}
+
+  /* ====== MODAL ====== */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(27,42,68,.55);
+    display:none;align-items:flex-end;justify-content:center;
+    z-index:50;padding:0;
+    -webkit-backdrop-filter:blur(2px);
+    backdrop-filter:blur(2px);
+  }
+  .modal-bg.open{display:flex}
+  .modal{
+    background:#fff;width:100%;max-width:560px;
+    border-radius:22px 22px 0 0;
+    padding:26px 22px calc(26px + env(safe-area-inset-bottom));
+    animation:slideup .3s ease;
+  }
+  @keyframes slideup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .modal h3{
+    font-family:var(--serif);font-size:1.3rem;color:var(--navy);
+    font-weight:700;
+  }
+  .modal .m-gift{
+    font-family:var(--serif);font-style:italic;color:var(--brown);
+    margin-top:4px;font-size:1.02rem;
+  }
+  .modal p.m-hint{font-size:.82rem;color:var(--muted);margin-top:10px;font-weight:300}
+  .modal label{
+    display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin:16px 0 6px;
+  }
+  .modal input{
+    width:100%;border:1px solid var(--beige);border-radius:10px;
+    padding:12px 14px;font-family:var(--sans);font-size:1rem;
+    background:var(--cream);outline:none;color:var(--ink);
+  }
+  .modal input:focus{border-color:var(--green)}
+  .m-actions{display:flex;gap:10px;margin-top:22px}
+  .m-cancel{
+    flex:1;background:none;border:1px solid #ddd;border-radius:999px;
+    padding:13px;font-family:var(--sans);font-size:.9rem;color:var(--muted);cursor:pointer;
+  }
+  .m-ok{
+    flex:2;background:var(--green);border:none;border-radius:999px;
+    padding:13px;font-family:var(--sans);font-size:.9rem;letter-spacing:.04em;
+    color:#fff;cursor:pointer;
+  }
+  .m-ok[disabled]{opacity:.6}
+  .m-error{color:#a33;font-size:.8rem;margin-top:10px;display:none}
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(80px);
+    background:var(--navy);color:#fff;font-size:.85rem;
+    padding:13px 22px;border-radius:999px;z-index:60;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    transition:transform .35s ease;max-width:88vw;text-align:center;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* ====== CONFIRMACIÓN ====== */
+  #confirmar{text-align:center}
+  .rsvp-card{
+    margin-top:26px;background:var(--green);border-radius:20px;
+    padding:34px 24px;color:#fff;
+    background-image:radial-gradient(circle at 12% 8%,rgba(255,255,255,.07) 0 46px,transparent 47px),
+                     radial-gradient(circle at 88% 92%,rgba(255,255,255,.07) 0 60px,transparent 61px);
+    box-shadow:0 18px 44px rgba(30,59,44,.35);
+  }
+  .rsvp-card .paw{font-size:1.6rem}
+  .rsvp-card h3{
+    font-family:var(--serif);font-size:1.45rem;font-weight:700;
+    letter-spacing:.06em;margin-top:8px;
+  }
+  .rsvp-card p{font-weight:300;font-size:.92rem;opacity:.92;margin:10px auto 0;max-width:34ch}
+  .wa-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    background:#fff;color:var(--green);text-decoration:none;
+    font-family:var(--sans);font-size:.95rem;letter-spacing:.04em;font-weight:500;
+    padding:14px 26px;border-radius:999px;margin-top:22px;
+    box-shadow:0 8px 22px rgba(0,0,0,.22);
+  }
+  .wa-btn svg{width:21px;height:21px;flex:none}
+
+  footer{
+    text-align:center;padding:40px 20px 60px;
+    background:var(--navy) url('assets/tartan.png') center/cover;
+    color:#fff;
+  }
+  footer .f-script{font-family:var(--script);font-size:1.9rem;color:var(--beige)}
+  footer p{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PORTADA ═══════════ -->
+<header class="hero" id="inicio">
+  <div class="hero-card">
+    <div class="hero-card-inner">
+      <img class="hero-bear" src="assets/oso.png" alt="Osito de peluche café">
+      <div class="hero-script">Baby&nbsp;Shower</div>
+      <div class="hero-name">FRANCO</div>
+      <div class="hero-rule"></div>
+      <div class="hero-date">Sábado 22 de Agosto</div>
+      <div class="hero-time">4:00 PM</div>
+      <div class="hero-parents">
+        <span>Mis papás:</span>
+        Oskar Osorio <i>y</i><br>Karla Rodriguez
+      </div>
+      <div class="hero-countdown" id="countdown"></div>
+      <div class="hero-wait">¡Te esperamos!</div>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#ubicacion">Desliza<span>▾</span></a>
+</header>
+
+<!-- ═══════════ 1 · UBICACIÓN ═══════════ -->
+<section id="ubicacion">
+  <div class="reveal">
+    <div class="sec-kicker">¿Dónde?</div>
+    <h2 class="sec-title">Ubicación</h2>
+    <p class="sec-sub">Toca el mapa y te llevamos directo con Google Maps</p>
+
+    <a class="map-wrap" id="mapLink" href="#" target="_blank" rel="noopener" aria-label="Abrir ubicación en Google Maps">
+      <svg class="map-svg" viewBox="0 0 400 320" role="img" aria-label="Mapa de la Calle Los Arces 505, Residencial Monteflor II">
+        <!-- fondo estilo Google Maps -->
+        <rect width="400" height="320" fill="#e9ebee"/>
+        <!-- manzanas -->
+        <rect x="0"   y="0"   width="150" height="105" fill="#f2f3f5"/>
+        <rect x="185" y="0"   width="120" height="105" fill="#f2f3f5"/>
+        <rect x="340" y="0"   width="60"  height="105" fill="#f2f3f5"/>
+        <rect x="0"   y="140" width="150" height="90"  fill="#f2f3f5"/>
+        <rect x="185" y="140" width="120" height="90"  fill="#f7f4ea"/>
+        <rect x="340" y="140" width="60"  height="90"  fill="#f2f3f5"/>
+        <rect x="0"   y="265" width="150" height="55"  fill="#f2f3f5"/>
+        <rect x="185" y="265" width="215" height="55"  fill="#f2f3f5"/>
+        <!-- parque -->
+        <rect x="340" y="140" width="60" height="90" fill="#cdeac0" rx="3"/>
+        <circle cx="358" cy="163" r="6" fill="#a9d99a"/>
+        <circle cx="378" cy="185" r="8" fill="#a9d99a"/>
+        <circle cx="360" cy="207" r="6" fill="#a9d99a"/>
+        <!-- edificios -->
+        <rect x="18"  y="18"  width="42" height="30" fill="#e4e7eb" rx="2"/>
+        <rect x="80"  y="24"  width="46" height="34" fill="#e4e7eb" rx="2"/>
+        <rect x="205" y="20"  width="38" height="30" fill="#e4e7eb" rx="2"/>
+        <rect x="258" y="26"  width="34" height="26" fill="#e4e7eb" rx="2"/>
+        <rect x="18"  y="158" width="42" height="30" fill="#e4e7eb" rx="2"/>
+        <rect x="80"  y="166" width="46" height="32" fill="#e4e7eb" rx="2"/>
+        <rect x="205" y="158" width="38" height="26" fill="#efe6cf" rx="2"/>
+        <rect x="258" y="164" width="34" height="28" fill="#efe6cf" rx="2"/>
+        <rect x="24"  y="278" width="46" height="26" fill="#e4e7eb" rx="2"/>
+        <rect x="210" y="278" width="44" height="26" fill="#e4e7eb" rx="2"/>
+        <!-- avenida principal (vertical, amarilla) -->
+        <rect x="150" y="0" width="35" height="320" fill="#fcd77f"/>
+        <rect x="150" y="0" width="35" height="320" fill="none" stroke="#f2c14e" stroke-width="1"/>
+        <line x1="167" y1="8" x2="167" y2="312" stroke="#fff" stroke-width="2" stroke-dasharray="14 12"/>
+        <!-- calles blancas -->
+        <rect x="0" y="105" width="400" height="35" fill="#ffffff" stroke="#dfe1e5" stroke-width="1"/>
+        <rect x="0" y="230" width="400" height="35" fill="#ffffff" stroke="#dfe1e5" stroke-width="1"/>
+        <rect x="305" y="0" width="35" height="320" fill="#ffffff" stroke="#dfe1e5" stroke-width="1"/>
+        <!-- nombres de calles -->
+        <text x="78" y="127" font-family="Arial,sans-serif" font-size="11.5" font-style="italic" fill="#7d8288" text-anchor="middle">Calle Los Arces</text>
+        <text x="78" y="252" font-family="Arial,sans-serif" font-size="10" font-style="italic" fill="#9aa0a6" text-anchor="middle">Calle Los Sauces</text>
+        <text x="167" y="285" font-family="Arial,sans-serif" font-size="10" font-style="italic" fill="#b0871f" text-anchor="middle" transform="rotate(-90 167 285)">Av. Cayma</text>
+        <text x="322" y="60" font-family="Arial,sans-serif" font-size="10" font-style="italic" fill="#9aa0a6" text-anchor="middle" transform="rotate(-90 322 60)">Los Olivos</text>
+        <text x="370" y="188" font-family="Arial,sans-serif" font-size="9" font-style="italic" fill="#5f9455" text-anchor="middle">Parque</text>
+        <!-- etiqueta de la residencial -->
+        <text x="245" y="205" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#8a7f6e" text-anchor="middle">Residencial</text>
+        <text x="245" y="218" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="#8a7f6e" text-anchor="middle">Monteflor II</text>
+        <!-- pulso bajo el pin -->
+        <circle cx="245" cy="122" r="10" fill="#6f4e37" opacity=".45" class="pulse"/>
+        <circle cx="245" cy="122" r="5" fill="#6f4e37" opacity=".35"/>
+        <!-- PIN OSITO -->
+        <g class="pin-float">
+          <g transform="translate(245 122)">
+            <!-- gota estilo google -->
+            <path d="M0 6 C -19 -16 -26 -26 -26 -44 A 26 26 0 1 1 26 -44 C 26 -26 19 -16 0 6 Z"
+                  fill="#6f4e37" stroke="#5a3d2b" stroke-width="1.5"/>
+            <circle cx="0" cy="-44" r="19" fill="#fdf8ef"/>
+            <!-- carita de oso -->
+            <circle cx="-8.5" cy="-53" r="5.5" fill="#8a6242"/>
+            <circle cx="8.5"  cy="-53" r="5.5" fill="#8a6242"/>
+            <circle cx="-8.5" cy="-53" r="2.6" fill="#d9c7a7"/>
+            <circle cx="8.5"  cy="-53" r="2.6" fill="#d9c7a7"/>
+            <circle cx="0" cy="-44" r="13" fill="#8a6242"/>
+            <ellipse cx="0" cy="-39.5" rx="7" ry="5.4" fill="#d9c7a7"/>
+            <ellipse cx="0" cy="-42" rx="2.6" ry="2" fill="#3a2a1c"/>
+            <path d="M0 -40 L0 -37.4 M0 -37.4 Q -2.6 -35.4 -4.4 -36.8 M0 -37.4 Q 2.6 -35.4 4.4 -36.8"
+                  stroke="#3a2a1c" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <circle cx="-5" cy="-46" r="1.7" fill="#3a2a1c"/>
+            <circle cx="5"  cy="-46" r="1.7" fill="#3a2a1c"/>
+          </g>
+          <!-- etiqueta 505 -->
+          <g transform="translate(245 30)">
+            <rect x="-38" y="-14" width="76" height="26" rx="13" fill="#1b2a44"/>
+            <text x="0" y="4" font-family="Arial,sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">N° 505</text>
+          </g>
+        </g>
+      </svg>
+      <div class="map-foot">
+        <svg class="pin-ico" width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" fill="#6f4e37"/>
+          <circle cx="12" cy="10" r="2.8" fill="#fff"/>
+        </svg>
+        <div>
+          <b>Calle Los Arces 505</b>
+          <small>Residencial Monteflor II · Cayma, Arequipa</small>
+        </div>
+        <span class="go">Cómo llegar</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · DRESS CODE ═══════════ -->
+<section id="dresscode">
+  <div class="reveal">
+    <div class="sec-kicker">¿Qué me pongo?</div>
+    <h2 class="sec-title">Dress Code</h2>
+    <p class="sec-sub">Casual elegante</p>
+
+    <div class="palette">
+      <div class="swatch"><i style="background:#1b2a44"></i><span>Azul marino</span></div>
+      <div class="swatch"><i style="background:#1e3b2c"></i><span>Verde oscuro</span></div>
+      <div class="swatch"><i style="background:#6f4e37"></i><span>Café</span></div>
+      <div class="swatch"><i style="background:#d9c7a7"></i><span>Beige</span></div>
+    </div>
+
+    <p class="dress-note">«Sugerimos estos tonos para acompañar la tarde…<br>y salir hermosos en las fotos» 🧸</p>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · LISTA DE REGALOS ═══════════ -->
+<section id="regalos">
+  <div class="reveal">
+    <div class="sec-kicker">Un detalle…</div>
+    <h2 class="sec-title">Mesa de Regalos</h2>
+    <p class="sec-sub">Tu compañía es nuestro mejor regalo. Pero si deseas consentir a Franco con algo más, tenemos algunas opciones en mente — elige una y sepárala para que nadie más la repita.</p>
+
+    <div class="cats" id="cats"></div>
+    <div class="gifts" id="gifts"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · CONFIRMACIÓN ═══════════ -->
+<section id="confirmar">
+  <div class="reveal">
+    <div class="sec-kicker">¿Nos acompañas?</div>
+    <h2 class="sec-title">Confirma tu asistencia</h2>
+
+    <div class="rsvp-card">
+      <div class="paw">🐾</div>
+      <h3>¡Queremos verte ahí!</h3>
+      <p>Ayúdanos confirmando tu asistencia por WhatsApp para reservar tu lugar.</p>
+      <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.5c1.2.6 2.5.9 3.8.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 22.5c-1.2 0-2.4-.3-3.5-.8l-.7-.4-4.9.9 1-4.7-.4-.7c-.9-1.5-1.4-3.2-1.4-4.8 0-5.2 4.3-9.5 9.5-9.5s9.5 4.3 9.5 9.5-4.2 9.5-9.1 9.5zm5.2-7.1c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+        Confirmar por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-script">Con amor, la familia de Franco</div>
+  <p>Sábado 22 de Agosto · 4:00 PM</p>
+</footer>
+
+<!-- ═══════════ MODAL SEPARAR REGALO ═══════════ -->
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h3 id="modalTitle">Separar regalo</h3>
+    <div class="m-gift" id="mGift"></div>
+    <p class="m-hint">Déjanos tu nombre para reservarlo. Solo nosotros lo veremos — en la lista aparecerá únicamente como «separado». 🤍</p>
+    <label for="mNombre">Nombre</label>
+    <input id="mNombre" type="text" autocomplete="given-name" placeholder="Tu nombre">
+    <label for="mApellido">Apellido</label>
+    <input id="mApellido" type="text" autocomplete="family-name" placeholder="Tu apellido">
+    <div class="m-error" id="mError"></div>
+    <div class="m-actions">
+      <button class="m-cancel" id="mCancel" type="button">Cancelar</button>
+      <button class="m-ok" id="mOk" type="button">Separar 🎀</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════ CONFIGURACIÓN ═══════════════
+   API_URL: URL del Web App de Google Apps Script (ver INSTRUCCIONES.md).
+   Si se deja vacía, el botón «Separar» abre WhatsApp con el pedido. */
+const API_URL = "";
+const WA_NUMERO = "51950284762";
+
+const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent("Calle Los Arces 505, Residencial Monteflor II, Cayma, Arequipa, Perú");
+
+/* ═══════════════ LISTA DE REGALOS (desde Bebé Oso.xlsx · hoja LISTA DE REGALOS) ═══════════════ */
+const REGALOS = [
+  {id:1,  n:"Set de biberones Avent Natural 3.0",              c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", e:"DISPONIBLE"},
+  {id:2,  n:"Silla de comer escritorio 3 en 1 Tango · Priori", c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/883501696/silla-de-comer-bebe-escritorio-3-en-1-tango-priori/883501697", e:"DISPONIBLE"},
+  {id:3,  n:"Termo Carestino 1200 ml frío/calor",              c:"Alimentación", u:"https://www.carestino.com.pe/producto/termo-carestino-1200ml-frio-calor-blanco/", e:"DISPONIBLE"},
+  {id:4,  n:"Biberón de vidrio Avent Natural 3.0 · 240 ml",    c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/129432342/Biberon-Avent-Natural-120Ml-Vidrio-Anticolicos-0M+/129432345", e:"DISPONIBLE"},
+  {id:5,  n:"Biberón Avent recién nacido x2 · 125 ml",         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/129569632/Biberon-Avent-Natural-Recien-Nacido-2-Uni.-125-Ml-Anticolicos-Sin-Bpa/129569633", e:"DISPONIBLE"},
+  {id:6,  n:"Chupón Avent 0-6m ultra aireado x2 + estuche",    c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/149467547/chupon-avent-0-6m-ultra-aereado-x-2-uni-estuche-nino/149467548", e:"DISPONIBLE"},
+  {id:7,  n:"Pack cuidado para bebé Eucerin",                  c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", e:"DISPONIBLE"},
+  {id:8,  n:"Champú y gel de baño Eucerin Baby · 400 ml",      c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/153014861/pack-3-eucerin-baby-champu-y-gel-de-bano-13-5-oz-400-ml/153014862", e:"DISPONIBLE"},
+  {id:9,  n:"Loción corporal ISDIN Babynaturals · 400 ml",     c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", e:"DISPONIBLE"},
+  {id:10, n:"Reductor de inodoro con escalera Pekin V2",       c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", e:"DISPONIBLE"},
+  {id:11, n:"Cama Montessori",                                 c:"Cuarto",       u:"", e:"DISPONIBLE"},
+  {id:12, n:"Cuna corral",                                     c:"Cuarto",       u:"", e:"SEPARADO"},
+  {id:13, n:"Colchón para cuna corral",                        c:"Cuarto",       u:"", e:"SEPARADO"},
+  {id:14, n:"Edredón para cuna corral",                        c:"Cuarto",       u:"https://www.carestino.com.pe/producto/edredon-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
+  {id:15, n:"Escalera infantil multifunción",                  c:"Cuarto",       u:"https://www.carestino.com.pe/producto/escalera-infantil-multifuncion-daily-v2-gris/", e:"DISPONIBLE"},
+  {id:16, n:"Mecedora eléctrica de bebé",                      c:"Cuarto",       u:"", e:"SEPARADO"},
+  {id:17, n:"Crema de lanolina Lansinoh · 40 g",               c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/120796092/Crema-Lanolina-40gr-Lansinoh/120796094", e:"DISPONIBLE"},
+  {id:18, n:"Coche de paseo",                                  c:"Paseo",        u:"", e:"SEPARADO"},
+  {id:19, n:"Canguro porta bebé",                              c:"Paseo",        u:"https://www.carestino.com.pe/producto/canguro-porta-bebe-gris-oscuro/", e:"DISPONIBLE"},
+  {id:20, n:"Carrito de paseo Trop",                           c:"Paseo",        u:"https://www.falabella.com.pe/falabella-pe/product/883733158/coche-paseo-trop-negro-st/883733159", e:"DISPONIBLE"},
+  {id:21, n:"Combo mosquitero + cobertor de lluvia",           c:"Paseo",        u:"https://www.carestino.com.pe/producto/combo-mosquitero-cobertor-de-lluvia/", e:"DISPONIBLE"},
+  {id:22, n:"Silla de auto Booster Monza",                     c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", e:"DISPONIBLE"},
+  {id:23, n:"Bata de oso 2-4 años",                            c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", e:"DISPONIBLE"},
+  {id:24, n:"Esterilizador de biberones",                      c:"Alimentación", u:"", e:"DISPONIBLE"},
+  {id:25, n:"Cojín de lactancia",                              c:"Alimentación", u:"", e:"DISPONIBLE"},
+  {id:26, n:"Media monitor de frecuencia cardiaca Sense-U",    c:"Cuidado",      u:"https://shop.sense-u.com/en-saf/products/sense-u-smart-sock-shoe", e:"DISPONIBLE"},
+  {id:27, n:"Bañera con cambiador plegable",                   c:"Aseo",         u:"", e:"DISPONIBLE"},
+  {id:28, n:"Extractor de leche eléctrico",                    c:"Mamá",         u:"", e:"DISPONIBLE"},
+  {id:29, n:"Humidificador smart Xiaomi",                      c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/154851043/humidificador-xiaomi-smart-humidifier-2-uv-c-4-5l-350ml-h-32db-difusor-aromas-wifi-mi-home/154851044", e:"DISPONIBLE"},
+  {id:30, n:"Cámara Xiaomi C500 Dual",                         c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", e:"DISPONIBLE"},
+  {id:31, n:"Almohada de lactancia",                           c:"Alimentación", u:"", e:"DISPONIBLE"},
+  {id:32, n:"Gimnasio didáctico Carestino",                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", e:"DISPONIBLE"},
+  {id:33, n:"Bolsa de dormir de osito",                        c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", e:"DISPONIBLE"},
+  {id:34, n:"Sábanas para cuna 300 hilos",                     c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
+  {id:35, n:"Protector impermeable para colchón",              c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
+];
+
+/* ═══════════════ LÓGICA ═══════════════ */
+const $ = s => document.querySelector(s);
+
+/* — enlaces — */
+$('#mapLink').href = MAPS_URL;
+$('#waBtn').href = "https://wa.me/" + WA_NUMERO + "?text=" +
+  encodeURIComponent("Hola 🧸 Deseo confirmar mi asistencia al Baby Shower de Franco 💙");
+
+/* — cuenta regresiva — */
+(function(){
+  const evento = new Date(2026, 7, 22);           // 22 de agosto de 2026
+  const hoy = new Date();
+  const dias = Math.round((evento - new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())) / 86400000);
+  const el = $('#countdown');
+  if (dias > 1)       el.textContent = "Faltan " + dias + " días";
+  else if (dias === 1) el.textContent = "¡Es mañana!";
+  else if (dias === 0) el.textContent = "¡Es hoy! 🎉";
+  else                 el.style.display = "none";
+})();
+
+/* — animación al hacer scroll — */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* — categorías — */
+const CATS = ["Todos", ...new Set(REGALOS.map(r => r.c))];
+let catActiva = "Todos";
+
+function renderCats(){
+  $('#cats').innerHTML = CATS.map(c =>
+    `<button class="cat${c===catActiva?' on':''}" data-c="${c}">${c}</button>`).join('');
+}
+$('#cats').addEventListener('click', e => {
+  const b = e.target.closest('.cat'); if (!b) return;
+  catActiva = b.dataset.c; renderCats(); renderGifts();
+});
+
+/* — lista — */
+function renderGifts(){
+  const lista = REGALOS.filter(r => catActiva === "Todos" || r.c === catActiva);
+  $('#gifts').innerHTML = lista.map(r => {
+    const tomado = r.e === "SEPARADO";
+    return `<article class="gift${tomado?' tomado':''}" data-id="${r.id}">
+      <div class="gift-top">
+        <div class="gift-name">${r.n}</div>
+        <span class="tag ${tomado?'tomado':'libre'}">${tomado?'Separado':'Disponible'}</span>
+      </div>
+      <div class="gift-row">
+        <span class="gift-cat">${r.c}</span>
+        ${r.u ? `<a class="gift-link" href="${r.u}" target="_blank" rel="noopener">Ver referencia ↗</a>` : ''}
+        ${tomado
+          ? `<span class="gift-sep-note">Ya tiene madrina o padrino 🤍</span>`
+          : `<button class="gift-btn" data-sep="${r.id}" type="button">Separar este regalo</button>`}
+      </div>
+    </article>`;
+  }).join('');
+}
+renderCats(); renderGifts();
+
+/* — estados en vivo (si hay API) — */
+async function cargarEstados(){
+  if (!API_URL) return;
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    if (data && data.ok && data.estados) {
+      REGALOS.forEach(r => { if (data.estados[r.id]) r.e = data.estados[r.id]; });
+      renderGifts();
+    }
+  } catch(e) { /* sin conexión: se mantiene la lista local */ }
+}
+cargarEstados();
+
+/* — modal — */
+let regaloActual = null;
+$('#gifts').addEventListener('click', e => {
+  const b = e.target.closest('[data-sep]'); if (!b) return;
+  regaloActual = REGALOS.find(r => r.id === Number(b.dataset.sep));
+  if (!regaloActual) return;
+  $('#mGift').textContent = "🎁 " + regaloActual.n;
+  $('#mNombre').value = ""; $('#mApellido').value = "";
+  $('#mError').style.display = "none";
+  $('#mOk').disabled = false;
+  $('#modalBg').classList.add('open');
+  document.body.style.overflow = "hidden";
+});
+function cerrarModal(){
+  $('#modalBg').classList.remove('open');
+  document.body.style.overflow = "";
+}
+$('#mCancel').addEventListener('click', cerrarModal);
+$('#modalBg').addEventListener('click', e => { if (e.target === e.currentTarget) cerrarModal(); });
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove('show'), 3800);
+}
+
+$('#mOk').addEventListener('click', async () => {
+  const nombre = $('#mNombre').value.trim();
+  const apellido = $('#mApellido').value.trim();
+  const err = $('#mError');
+  if (!nombre || !apellido) {
+    err.textContent = "Por favor escribe tu nombre y apellido 🙏";
+    err.style.display = "block";
+    return;
+  }
+  if (!regaloActual) return;
+
+  if (API_URL) {
+    $('#mOk').disabled = true;
+    $('#mOk').textContent = "Separando…";
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {"Content-Type":"text/plain;charset=utf-8"},
+        body: JSON.stringify({accion:"separar", id:regaloActual.id, nombre, apellido})
+      });
+      const data = await res.json();
+      if (data.ok) {
+        regaloActual.e = "SEPARADO";
+        renderGifts(); cerrarModal();
+        toast("¡Gracias, " + nombre + "! El regalo quedó separado 🤍");
+      } else if (data.motivo === "ya_separado") {
+        regaloActual.e = "SEPARADO";
+        renderGifts(); cerrarModal();
+        toast("Ups, alguien se adelantó con este regalo 🥺 ¡Elige otro!");
+      } else {
+        throw new Error(data.motivo || "error");
+      }
+    } catch(e) {
+      err.textContent = "No pudimos conectar. Inténtalo de nuevo en un momento 🙏";
+      err.style.display = "block";
+    } finally {
+      $('#mOk').disabled = false;
+      $('#mOk').textContent = "Separar 🎀";
+    }
+  } else {
+    /* Sin API: el pedido llega por WhatsApp y los papás actualizan la lista */
+    const msg = "Hola 🧸 Quiero separar un regalo para el Baby Shower de Franco:\n\n" +
+      "🎁 " + regaloActual.n + "\n👤 " + nombre + " " + apellido;
+    const url = "https://wa.me/" + WA_NUMERO + "?text=" + encodeURIComponent(msg);
+    cerrarModal();
+    toast("Te llevamos a WhatsApp para confirmar tu regalo 💬");
+    const w = window.open(url, "_blank");   // dentro del gesto del usuario: no lo bloquea Safari
+    if (!w) window.location.href = url;
+  }
+});
+</script>
+</body>
+</html>
