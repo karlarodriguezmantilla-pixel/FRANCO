@@ -81,7 +81,8 @@ quién lo separó (los nombres solo los ves tú en una hoja de Google):
 | Qué | Dónde |
 |---|---|
 | Número de WhatsApp | `const WA_NUMERO = "51950284762";` |
-| Dirección del mapa | `const DIRECCION = "..."` (actualiza el mapa incrustado y el botón «Cómo llegar» a la vez) |
+| Dirección del botón «Cómo llegar» | `const DIRECCION = "..."` |
+| Punto del osito en el mapa | `const COORDS = [lat, lng]` (clic derecho en Google Maps → copiar coordenadas) |
 | Fecha para la cuenta regresiva | `new Date("2026-08-22T16:00:00-05:00")` |
 | Regalos (agregar/quitar/marcar) | La lista `const REGALOS = [...]` |
 
