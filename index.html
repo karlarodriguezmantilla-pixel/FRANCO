@@ -36,10 +36,16 @@
   html{scroll-behavior:smooth}
   body{
     font-family:var(--sans);
-    background:var(--cream);
+    background:var(--navy);
     color:var(--ink);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+  }
+  /* El tartán acompaña TODA la página (capa fija: funciona también en iOS,
+     donde background-attachment:fixed falla) */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:-1;
+    background:var(--navy) url('assets/tartan.png') center/cover no-repeat;
   }
   img{max-width:100%;display:block}
   a{color:inherit}
@@ -48,12 +54,12 @@
   .hero{
     min-height:100vh;
     min-height:100svh;
-    background:var(--navy) url('assets/tartan.png') center/cover no-repeat;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     padding:clamp(18px,5vw,40px);
+    padding-bottom:92px; /* espacio reservado para la flecha */
     position:relative;
   }
   .hero-card{
@@ -155,20 +161,26 @@
   }
   .scroll-hint{
     position:absolute;
-    bottom:calc(14px + env(safe-area-inset-bottom));
-    left:50%;transform:translateX(-50%);
-    color:#fff;opacity:.85;
-    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-    text-align:center;text-decoration:none;
-  }
-  .scroll-hint span{
-    display:block;font-size:1.2rem;margin-top:2px;
+    bottom:calc(16px + env(safe-area-inset-bottom));
+    left:50%;margin-left:-26px;
+    color:var(--beige);
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.55));
     animation:bob 1.6s ease-in-out infinite;
   }
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+  .scroll-hint svg{display:block}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 
-  /* ====== SECCIONES ====== */
-  section{padding:clamp(52px,12vw,84px) 20px;max-width:560px;margin:0 auto}
+  /* ====== SECCIONES: tarjetas blancas enmarcadas sobre el tartán ====== */
+  section{
+    width:min(600px,calc(100% - 28px));
+    margin:30px auto;
+    padding:clamp(40px,9vw,64px) clamp(20px,5vw,28px);
+    background:var(--card);
+    border-radius:24px;
+    outline:1px solid var(--beige);
+    outline-offset:-11px;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+  }
   .sec-kicker{
     font-family:var(--script);
     font-size:2rem;color:var(--brown);
@@ -245,7 +257,7 @@
   }
 
   /* ====== REGALOS ====== */
-  #regalos{max-width:620px}
+  #regalos{width:min(640px,calc(100% - 28px))}
   .cats{
     display:flex;gap:8px;overflow-x:auto;
     padding:24px 2px 6px;
@@ -364,7 +376,11 @@
                      radial-gradient(circle at 88% 92%,rgba(255,255,255,.07) 0 60px,transparent 61px);
     box-shadow:0 18px 44px rgba(30,59,44,.35);
   }
-  .rsvp-card .paw{font-size:1.6rem}
+  .rsvp-dog{
+    width:118px;margin:0 auto 6px;
+    filter:drop-shadow(0 8px 14px rgba(0,0,0,.3));
+  }
+  .rsvp-dog svg{display:block;width:100%;height:auto}
   .rsvp-card h3{
     font-family:var(--serif);font-size:1.45rem;font-weight:700;
     letter-spacing:.06em;margin-top:8px;
@@ -380,8 +396,7 @@
   .wa-btn svg{width:21px;height:21px;flex:none}
 
   footer{
-    text-align:center;padding:40px 20px 60px;
-    background:var(--navy) url('assets/tartan.png') center/cover;
+    text-align:center;padding:28px 20px 60px;
     color:#fff;
   }
   footer .f-script{font-family:var(--script);font-size:1.9rem;color:var(--beige)}
@@ -408,7 +423,12 @@
       <div class="hero-wait">¡Te esperamos!</div>
     </div>
   </div>
-  <a class="scroll-hint" href="#ubicacion">Desliza<span>▾</span></a>
+  <a class="scroll-hint" href="#ubicacion" aria-label="Desliza para ver más">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none">
+      <path d="M5 8l7 6.5L19 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 13l7 6.5L19 13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+    </svg>
+  </a>
 </header>
 
 <!-- ═══════════ 1 · UBICACIÓN ═══════════ -->
@@ -475,7 +495,34 @@
     <h2 class="sec-title">Confirma tu asistencia</h2>
 
     <div class="rsvp-card">
-      <div class="paw">🐾</div>
+      <div class="rsvp-dog" aria-hidden="true">
+        <!-- El perrito de la familia 🐶 -->
+        <svg viewBox="0 0 120 106">
+          <!-- orejas largas y onduladas -->
+          <path d="M33 32 C 16 36 8 58 13 78 C 16 90 28 94 35 85 C 41 77 40 56 39 44 Z" fill="#c99b6a"/>
+          <path d="M87 32 C 104 36 112 58 107 78 C 104 90 92 94 85 85 C 79 77 80 56 81 44 Z" fill="#c99b6a"/>
+          <path d="M20 60 C 22 70 26 78 31 81 M100 60 C 98 70 94 78 89 81" stroke="#b3854f" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>
+          <!-- cabeza -->
+          <ellipse cx="60" cy="52" rx="33" ry="31" fill="#fdf6ec"/>
+          <!-- manchitas caramelo alrededor de los ojos -->
+          <path d="M32 42 C 30 52 33 60 39 64 C 44 58 45 47 41 39 C 38 37 34 38 32 42 Z" fill="#e0bb8a" opacity=".75"/>
+          <path d="M88 42 C 90 52 87 60 81 64 C 76 58 75 47 79 39 C 82 37 86 38 88 42 Z" fill="#e0bb8a" opacity=".75"/>
+          <!-- manchita en forma de corazón (como la de su lomo) -->
+          <path d="M60 16 c 2.4 -3 7 -2.4 7.6 1 c .5 2.8 -3.4 6.2 -7.6 8.6 c -4.2 -2.4 -8.1 -5.8 -7.6 -8.6 c .6 -3.4 5.2 -4 7.6 -1 Z" fill="#cf9f6e"/>
+          <!-- ojos -->
+          <circle cx="47" cy="50" r="4.2" fill="#3a2a1c"/>
+          <circle cx="73" cy="50" r="4.2" fill="#3a2a1c"/>
+          <circle cx="48.5" cy="48.5" r="1.3" fill="#fff"/>
+          <circle cx="74.5" cy="48.5" r="1.3" fill="#fff"/>
+          <!-- nariz y hocico feliz -->
+          <ellipse cx="60" cy="62" rx="5.4" ry="4.2" fill="#4a3526"/>
+          <path d="M60 66 L60 69" stroke="#4a3526" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M48 70 Q 60 82 72 70 Q 60 76 48 70 Z" fill="#5a3d2b"/>
+          <ellipse cx="60" cy="75.5" rx="5" ry="3.6" fill="#e79b93"/>
+          <!-- pechito lanudo -->
+          <path d="M42 92 Q 47 84 53 90 Q 57 83 61 90 Q 66 83 70 90 Q 75 84 79 92 Q 70 102 60 102 Q 50 102 42 92 Z" fill="#fdf6ec"/>
+        </svg>
+      </div>
       <h3>¡Queremos verte ahí!</h3>
       <p>Ayúdanos confirmando tu asistencia por WhatsApp para reservar tu lugar.</p>
       <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">
@@ -487,7 +534,7 @@
 </section>
 
 <footer>
-  <div class="f-script">Con amor, la familia de Franco</div>
+  <div class="f-script">Con amor, la familia Osorio Rodriguez</div>
   <p>Sábado 22 de Agosto · 4:00 PM</p>
 </footer>
 
