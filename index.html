@@ -191,7 +191,16 @@
     display:block;text-decoration:none;
     border:1px solid #e6ddcc;background:#fff;
   }
+  .map-view{position:relative}
   .map-iframe{display:block;width:100%;height:320px;border:0;background:#e9ebee}
+  .map-pin{
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-100%);
+    pointer-events:none;
+    filter:drop-shadow(0 6px 8px rgba(43,38,32,.35));
+  }
+  .map-pin svg{display:block;animation:float 2.4s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
   .map-foot{
     display:flex;align-items:center;gap:12px;
     padding:14px 16px;background:#fff;
@@ -406,10 +415,33 @@
     <p class="sec-sub">Este es el mapa real de Google Maps · toca «Cómo llegar» para abrir la ruta</p>
 
     <div class="map-wrap">
-      <iframe class="map-iframe" id="mapFrame" src="about:blank"
-              title="Mapa de Google de la Calle Los Arces 505, Residencial Monteflor II"
-              loading="lazy" allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-view">
+        <iframe class="map-iframe" id="mapFrame" src="about:blank"
+                title="Mapa de Google de la Calle Los Arces 505, Residencial Monteflor II"
+                loading="lazy" allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- PIN OSITO sobre el punto de ubicación (el mapa centra la dirección) -->
+        <div class="map-pin" aria-hidden="true">
+          <svg viewBox="-27 -71 54 78" width="56" height="81">
+            <!-- gota estilo google -->
+            <path d="M0 6 C -19 -16 -26 -26 -26 -44 A 26 26 0 1 1 26 -44 C 26 -26 19 -16 0 6 Z"
+                  fill="#6f4e37" stroke="#5a3d2b" stroke-width="1.5"/>
+            <circle cx="0" cy="-44" r="19" fill="#fdf8ef"/>
+            <!-- carita de oso -->
+            <circle cx="-8.5" cy="-53" r="5.5" fill="#8a6242"/>
+            <circle cx="8.5"  cy="-53" r="5.5" fill="#8a6242"/>
+            <circle cx="-8.5" cy="-53" r="2.6" fill="#d9c7a7"/>
+            <circle cx="8.5"  cy="-53" r="2.6" fill="#d9c7a7"/>
+            <circle cx="0" cy="-44" r="13" fill="#8a6242"/>
+            <ellipse cx="0" cy="-39.5" rx="7" ry="5.4" fill="#d9c7a7"/>
+            <ellipse cx="0" cy="-42" rx="2.6" ry="2" fill="#3a2a1c"/>
+            <path d="M0 -40 L0 -37.4 M0 -37.4 Q -2.6 -35.4 -4.4 -36.8 M0 -37.4 Q 2.6 -35.4 4.4 -36.8"
+                  stroke="#3a2a1c" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+            <circle cx="-5" cy="-46" r="1.7" fill="#3a2a1c"/>
+            <circle cx="5"  cy="-46" r="1.7" fill="#3a2a1c"/>
+          </svg>
+        </div>
+      </div>
       <a class="map-foot" id="mapLink" href="#" target="_blank" rel="noopener" aria-label="Abrir ubicación en Google Maps">
         <svg class="pin-ico" width="26" height="26" viewBox="0 0 24 24" fill="none">
           <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" fill="#6f4e37"/>
@@ -502,7 +534,7 @@
 /* ═══════════════ CONFIGURACIÓN ═══════════════
    API_URL: URL del Web App de Google Apps Script (ver INSTRUCCIONES.md).
    Si se deja vacía, el botón «Separar» abre WhatsApp con el pedido. */
-const API_URL = "";
+const API_URL = "https://script.google.com/macros/s/AKfycbxhJdX4iJQh9H12GVzdYerm8cwGencJgukrZ7HAq-ZXWIvyR06xUU2XQsF4MjIyODgo/exec";
 const WA_NUMERO = "51950284762";
 
 /* La misma dirección alimenta el mapa incrustado y el botón «Cómo llegar»:
