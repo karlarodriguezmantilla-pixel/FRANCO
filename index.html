@@ -470,6 +470,7 @@
       <div class="swatch"><i style="background:#1e3b2c"></i><span>Verde oscuro</span></div>
       <div class="swatch"><i style="background:#6f4e37"></i><span>Café</span></div>
       <div class="swatch"><i style="background:#d9c7a7"></i><span>Beige</span></div>
+      <div class="swatch"><i style="background:#a9c9e2"></i><span>Celeste bebé</span></div>
     </div>
 
     <p class="dress-note">«Sugerimos estos tonos para acompañar la tarde…<br>y salir hermosos en las fotos» 🧸</p>
@@ -534,7 +535,7 @@
 </section>
 
 <footer>
-  <div class="f-script">Con amor, la familia Osorio Rodriguez</div>
+  <div class="f-script">Con amor, la familia<br>Osorio Rodriguez</div>
   <p>Sábado 22 de Agosto · 4:00 PM</p>
 </footer>
 
@@ -563,7 +564,8 @@
    API_URL: URL del Web App de Google Apps Script (ver INSTRUCCIONES.md).
    Si se deja vacía, el botón «Separar» abre WhatsApp con el pedido. */
 const API_URL = "https://script.google.com/macros/s/AKfycbxhJdX4iJQh9H12GVzdYerm8cwGencJgukrZ7HAq-ZXWIvyR06xUU2XQsF4MjIyODgo/exec";
-const WA_NUMERO = "51950284762";
+const WA_CONFIRMACION = "51950012550";  // confirmación de asistencia
+const WA_REGALOS      = "51950284762";  // respaldo para separar regalos sin API
 
 /* DIRECCION alimenta el botón «Cómo llegar»; COORDS es el punto donde se ancla
    el osito (el mismo que resuelve Google Maps para esa dirección).
@@ -572,43 +574,46 @@ const DIRECCION = "Calle Los Arces 505, Residencial Monteflor II, Cayma, Arequip
 const COORDS    = [-16.3815956, -71.5500472];
 const MAPS_URL  = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(DIRECCION);
 
-/* ═══════════════ LISTA DE REGALOS (desde Bebé Oso.xlsx · hoja LISTA DE REGALOS) ═══════════════ */
+/* ═══════════════ LISTA DE REGALOS (desde Bebé Oso.xlsx · hoja LISTA DE REGALOS)
+   t = cuántas veces puede separarse (ej. pañales) · s = veces ya separado ═══════════════ */
 const REGALOS = [
-  {id:1,  n:"Set de biberones Avent Natural 3.0",              c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", e:"DISPONIBLE"},
-  {id:2,  n:"Silla de comer escritorio 3 en 1 Tango · Priori", c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/883501696/silla-de-comer-bebe-escritorio-3-en-1-tango-priori/883501697", e:"DISPONIBLE"},
-  {id:3,  n:"Termo Carestino 1200 ml frío/calor",              c:"Alimentación", u:"https://www.carestino.com.pe/producto/termo-carestino-1200ml-frio-calor-blanco/", e:"DISPONIBLE"},
-  {id:4,  n:"Biberón de vidrio Avent Natural 3.0 · 240 ml",    c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/129432342/Biberon-Avent-Natural-120Ml-Vidrio-Anticolicos-0M+/129432345", e:"DISPONIBLE"},
-  {id:5,  n:"Biberón Avent recién nacido x2 · 125 ml",         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/129569632/Biberon-Avent-Natural-Recien-Nacido-2-Uni.-125-Ml-Anticolicos-Sin-Bpa/129569633", e:"DISPONIBLE"},
-  {id:6,  n:"Chupón Avent 0-6m ultra aireado x2 + estuche",    c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/149467547/chupon-avent-0-6m-ultra-aereado-x-2-uni-estuche-nino/149467548", e:"DISPONIBLE"},
-  {id:7,  n:"Pack cuidado para bebé Eucerin",                  c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", e:"DISPONIBLE"},
-  {id:8,  n:"Champú y gel de baño Eucerin Baby · 400 ml",      c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/153014861/pack-3-eucerin-baby-champu-y-gel-de-bano-13-5-oz-400-ml/153014862", e:"DISPONIBLE"},
-  {id:9,  n:"Loción corporal ISDIN Babynaturals · 400 ml",     c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", e:"DISPONIBLE"},
-  {id:10, n:"Reductor de inodoro con escalera Pekin V2",       c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", e:"DISPONIBLE"},
-  {id:11, n:"Cama Montessori",                                 c:"Cuarto",       u:"", e:"DISPONIBLE"},
-  {id:12, n:"Cuna corral",                                     c:"Cuarto",       u:"", e:"SEPARADO"},
-  {id:13, n:"Colchón para cuna corral",                        c:"Cuarto",       u:"", e:"SEPARADO"},
-  {id:14, n:"Edredón para cuna corral",                        c:"Cuarto",       u:"https://www.carestino.com.pe/producto/edredon-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
-  {id:15, n:"Escalera infantil multifunción",                  c:"Cuarto",       u:"https://www.carestino.com.pe/producto/escalera-infantil-multifuncion-daily-v2-gris/", e:"DISPONIBLE"},
-  {id:16, n:"Mecedora eléctrica de bebé",                      c:"Cuarto",       u:"", e:"SEPARADO"},
-  {id:17, n:"Crema de lanolina Lansinoh · 40 g",               c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/120796092/Crema-Lanolina-40gr-Lansinoh/120796094", e:"DISPONIBLE"},
-  {id:18, n:"Coche de paseo",                                  c:"Paseo",        u:"", e:"SEPARADO"},
-  {id:19, n:"Canguro porta bebé",                              c:"Paseo",        u:"https://www.carestino.com.pe/producto/canguro-porta-bebe-gris-oscuro/", e:"DISPONIBLE"},
-  {id:20, n:"Carrito de paseo Trop",                           c:"Paseo",        u:"https://www.falabella.com.pe/falabella-pe/product/883733158/coche-paseo-trop-negro-st/883733159", e:"DISPONIBLE"},
-  {id:21, n:"Combo mosquitero + cobertor de lluvia",           c:"Paseo",        u:"https://www.carestino.com.pe/producto/combo-mosquitero-cobertor-de-lluvia/", e:"DISPONIBLE"},
-  {id:22, n:"Silla de auto Booster Monza",                     c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", e:"DISPONIBLE"},
-  {id:23, n:"Bata de oso 2-4 años",                            c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", e:"DISPONIBLE"},
-  {id:24, n:"Esterilizador de biberones",                      c:"Alimentación", u:"", e:"DISPONIBLE"},
-  {id:25, n:"Cojín de lactancia",                              c:"Alimentación", u:"", e:"DISPONIBLE"},
-  {id:26, n:"Media monitor de frecuencia cardiaca Sense-U",    c:"Cuidado",      u:"https://shop.sense-u.com/en-saf/products/sense-u-smart-sock-shoe", e:"DISPONIBLE"},
-  {id:27, n:"Bañera con cambiador plegable",                   c:"Aseo",         u:"", e:"DISPONIBLE"},
-  {id:28, n:"Extractor de leche eléctrico",                    c:"Mamá",         u:"", e:"DISPONIBLE"},
-  {id:29, n:"Humidificador smart Xiaomi",                      c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/154851043/humidificador-xiaomi-smart-humidifier-2-uv-c-4-5l-350ml-h-32db-difusor-aromas-wifi-mi-home/154851044", e:"DISPONIBLE"},
-  {id:30, n:"Cámara Xiaomi C500 Dual",                         c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", e:"DISPONIBLE"},
-  {id:31, n:"Almohada de lactancia",                           c:"Alimentación", u:"", e:"DISPONIBLE"},
-  {id:32, n:"Gimnasio didáctico Carestino",                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", e:"DISPONIBLE"},
-  {id:33, n:"Bolsa de dormir de osito",                        c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", e:"DISPONIBLE"},
-  {id:34, n:"Sábanas para cuna 300 hilos",                     c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
-  {id:35, n:"Protector impermeable para colchón",              c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", e:"DISPONIBLE"},
+  {id:1,  n:"SET BIBERONES",                                        c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", t:1, s:0},
+  {id:2,  n:"SILLA DE COMER BEBE ESCRITORIO 3 EN 1 PRIORI",         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/883501696/silla-de-comer-bebe-escritorio-3-en-1-tango-priori/883501698", t:1, s:0},
+  {id:3,  n:"TERMO CARESTINO 1200 ML FRIO/CALOR",                   c:"Alimentación", u:"https://www.carestino.com.pe/producto/termo-carestino-1200ml-frio-calor-blanco/", t:1, s:0},
+  {id:4,  n:"BIBERON DE VIDRIO",                                    c:"Alimentación", u:"https://infanti.com.pe/products/biberon-natural-response-3-0-125ml-flow-2-0m?variant=48241124278572", t:1, s:0},
+  {id:5,  n:"CHUPON AVENT",                                         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/149467547/chupon-avent-0-6m-ultra-aereado-x-2-uni-estuche-nino/149467548", t:1, s:0},
+  {id:6,  n:"PACK CUIDADO EUCERIN",                                 c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", t:1, s:0},
+  {id:7,  n:"BODY LOTION ISDIN",                                    c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", t:1, s:0},
+  {id:8,  n:"REDUCTOR DE INODORO CON ESCALERA",                     c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", t:1, s:0},
+  {id:9,  n:"CAMA MONTESSORI",                                      c:"Cuarto",       u:"", t:1, s:0},
+  {id:10, n:"CUNA CORRAL",                                          c:"Cuarto",       u:"", t:1, s:1},
+  {id:11, n:"COLCHON PARA CUNA CORRAL",                             c:"Cuarto",       u:"", t:1, s:1},
+  {id:12, n:"EDREDON PARA CUNA CORRAL",                             c:"Cuarto",       u:"https://www.carestino.com.pe/producto/edredon-para-cuna-corral-de-70x104cm-blanco/", t:1, s:0},
+  {id:13, n:"ESCALERA INFANTIL MULTIFUNCION",                       c:"Cuarto",       u:"https://www.carestino.com.pe/producto/escalera-infantil-multifuncion-daily-v2-gris/", t:1, s:0},
+  {id:14, n:"MECEDORA ELECTRICA DE BEBE",                           c:"Cuarto",       u:"", t:1, s:1},
+  {id:15, n:"CREMA LANOLINA 40GR LANSINOH",                         c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/120796092/Crema-Lanolina-40gr-Lansinoh/120796094", t:2, s:0},
+  {id:16, n:"COCHE DE PASEO",                                       c:"Paseo",        u:"", t:1, s:1},
+  {id:17, n:"CANGURO PORTA BEBE",                                   c:"Paseo",        u:"https://www.carestino.com.pe/producto/canguro-porta-bebe-basic-grafito/", t:1, s:0},
+  {id:18, n:"COMBO MOSQUITERO CON COBERTOR DE LLUVIA CARESTINO",    c:"Paseo",        u:"https://www.carestino.com.pe/producto/combo-mosquitero-cobertor-de-lluvia/", t:1, s:0},
+  {id:19, n:"SILLA DE AUTO MONZA",                                  c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", t:1, s:0},
+  {id:20, n:"BATA OSO 2-4 AÑOS",                                    c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", t:1, s:0},
+  {id:21, n:"ESTERILIZADOR DE BIBERONES",                           c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/126491583/CALENTADOR-DE-BIBERONES-4-EN-1-PREMIUM-Y-ESTERILIZADOR/126491586", t:1, s:0},
+  {id:22, n:"COJIN DE LACTANCIA",                                   c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/128116235/Cojin-de-Lactancia-Con-Funda-Premium-Grafito/128116236", t:1, s:0},
+  {id:23, n:"MEDIA DE CONTROL DE MONITOREO DE FRECUENCIA CARDIACA", c:"Cuidado",      u:"https://shop.sense-u.com/en-saf/products/sense-u-smart-sock-shoe", t:1, s:0},
+  {id:24, n:"KIT DE MANICURA",                                      c:"Cuidado",      u:"", t:1, s:1},
+  {id:25, n:"BAÑERA CON CAMBIADOR PLEGABLE",                        c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/140682567/Banera-Cambiador-y-Organizador-Desmontable-con-Drenaje-Spark/140682568", t:1, s:0},
+  {id:26, n:"EXTRACTOR DE LECHE ELECTRICO",                         c:"Mamá",         u:"https://www.falabella.com.pe/falabella-pe/product/20704098/extractor-portatil-m9-doble-succion/20704098", t:1, s:0},
+  {id:27, n:"HUMIDIFICADOR SMART",                                  c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/154851043/humidificador-xiaomi-smart-humidifier-2-uv-c-4-5l-350ml-h-32db-difusor-aromas-wifi-mi-home/154851044", t:1, s:0},
+  {id:28, n:"CAMARA C500 DUAL XIAOMI",                              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", t:1, s:0},
+  {id:29, n:"GIMNASIO DIDACTICO CARESTINO",                         c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", t:1, s:0},
+  {id:30, n:"BOLSA DE DORMIR OSITO",                                c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", t:1, s:0},
+  {id:31, n:"SABANAS PARA CUNA",                                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", t:2, s:0},
+  {id:32, n:"PROTECTOR IMPERMEABLE PARA COLCHON",                   c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", t:1, s:0},
+  {id:33, n:"MANTA SHERPA",                                         c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/155133463/manta-premium-de-sherpa-para-bebes-y-ninos-suavidad-y-abrigo-excepcional-frazada/155133464", t:1, s:0},
+  {id:34, n:"SET DE ALIMENTACION DE SILICONA",                      c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/153401695/set-de-alimentacion-para-bebe-de-silicona-antideslizante-9-piezas-verde-libre-de-bpa/153401696", t:1, s:0},
+  {id:35, n:"PAÑALES HUGGIES NATURAL CARE TALLA P",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panal-huggies-unisex-talla-p-natural-care/010472", t:4, s:0},
+  {id:36, n:"PAÑALES HUGGIES NATURAL CARE TALLA M",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-natural-care-m-60un/011390", t:10, s:0},
+  {id:37, n:"PAÑALES HUGGIES NATURAL CARE TALLA G",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-g-bigpack-natural-care-bolsa-66-un/036335", t:8, s:0},
 ];
 
 /* ═══════════════ LÓGICA ═══════════════ */
@@ -648,19 +653,23 @@ $('#mapLink').href = MAPS_URL;
     keyboard: false
   }).addTo(mapa);
 })();
-$('#waBtn').href = "https://wa.me/" + WA_NUMERO + "?text=" +
+$('#waBtn').href = "https://wa.me/" + WA_CONFIRMACION + "?text=" +
   encodeURIComponent("Hola 🧸 Deseo confirmar mi asistencia al Baby Shower de Franco 💙");
 
-/* — cuenta regresiva — */
+/* — cuenta regresiva: se recalcula al abrir la página y cada hora — */
 (function(){
-  const evento = new Date(2026, 7, 22);           // 22 de agosto de 2026
-  const hoy = new Date();
-  const dias = Math.round((evento - new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())) / 86400000);
   const el = $('#countdown');
-  if (dias > 1)       el.textContent = "Faltan " + dias + " días";
-  else if (dias === 1) el.textContent = "¡Es mañana!";
-  else if (dias === 0) el.textContent = "¡Es hoy! 🎉";
-  else                 el.style.display = "none";
+  function pinta(){
+    const evento = new Date(2026, 7, 22);         // 22 de agosto de 2026
+    const hoy = new Date();
+    const dias = Math.round((evento - new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate())) / 86400000);
+    if (dias > 1)       el.textContent = "Faltan " + dias + " días";
+    else if (dias === 1) el.textContent = "¡Es mañana!";
+    else if (dias === 0) el.textContent = "¡Es hoy! 🎉";
+    else                 el.style.display = "none";
+  }
+  pinta();
+  setInterval(pinta, 3600000);
 })();
 
 /* — animación al hacer scroll — */
@@ -686,17 +695,19 @@ $('#cats').addEventListener('click', e => {
 function renderGifts(){
   const lista = REGALOS.filter(r => catActiva === "Todos" || r.c === catActiva);
   $('#gifts').innerHTML = lista.map(r => {
-    const tomado = r.e === "SEPARADO";
+    const libres = r.t - r.s;
+    const tomado = libres <= 0;
+    const chip = tomado ? 'Separado' : (r.t > 1 ? `Quedan ${libres} de ${r.t}` : 'Disponible');
     return `<article class="gift${tomado?' tomado':''}" data-id="${r.id}">
       <div class="gift-top">
         <div class="gift-name">${r.n}</div>
-        <span class="tag ${tomado?'tomado':'libre'}">${tomado?'Separado':'Disponible'}</span>
+        <span class="tag ${tomado?'tomado':'libre'}">${chip}</span>
       </div>
       <div class="gift-row">
         <span class="gift-cat">${r.c}</span>
         ${r.u ? `<a class="gift-link" href="${r.u}" target="_blank" rel="noopener">Ver referencia ↗</a>` : ''}
         ${tomado
-          ? `<span class="gift-sep-note">Ya tiene madrina o padrino 🤍</span>`
+          ? `<span class="gift-sep-note">Ya tiene ${r.t>1?'madrinas y padrinos':'madrina o padrino'} 🤍</span>`
           : `<button class="gift-btn" data-sep="${r.id}" type="button">Separar este regalo</button>`}
       </div>
     </article>`;
@@ -704,14 +715,21 @@ function renderGifts(){
 }
 renderCats(); renderGifts();
 
-/* — estados en vivo (si hay API) — */
+/* — estados en vivo (si hay API v2) —
+   Solo se aceptan respuestas v:2 (formato con cupos). Si el Apps Script aún es
+   la versión anterior, la página usa la lista local y separa por WhatsApp. */
+let apiV2Ok = false;
 async function cargarEstados(){
   if (!API_URL) return;
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL + "?v=2");
     const data = await res.json();
-    if (data && data.ok && data.estados) {
-      REGALOS.forEach(r => { if (data.estados[r.id]) r.e = data.estados[r.id]; });
+    if (data && data.ok && data.v === 2 && data.estados) {
+      apiV2Ok = true;
+      REGALOS.forEach(r => {
+        const e = data.estados[r.id];
+        if (e) { r.s = Number(e.s) || 0; if (e.t) r.t = Number(e.t); }
+      });
       renderGifts();
     }
   } catch(e) { /* sin conexión: se mantiene la lista local */ }
@@ -757,22 +775,23 @@ $('#mOk').addEventListener('click', async () => {
   }
   if (!regaloActual) return;
 
-  if (API_URL) {
+  if (API_URL && apiV2Ok) {
     $('#mOk').disabled = true;
     $('#mOk').textContent = "Separando…";
     try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: {"Content-Type":"text/plain;charset=utf-8"},
-        body: JSON.stringify({accion:"separar", id:regaloActual.id, nombre, apellido})
+        body: JSON.stringify({accion:"separar", v:2, id:regaloActual.id, nombre, apellido})
       });
       const data = await res.json();
       if (data.ok) {
-        regaloActual.e = "SEPARADO";
+        regaloActual.s = (data.s != null) ? Number(data.s) : regaloActual.s + 1;
+        if (data.t) regaloActual.t = Number(data.t);
         renderGifts(); cerrarModal();
         toast("¡Gracias, " + nombre + "! El regalo quedó separado 🤍");
       } else if (data.motivo === "ya_separado") {
-        regaloActual.e = "SEPARADO";
+        regaloActual.s = regaloActual.t;
         renderGifts(); cerrarModal();
         toast("Ups, alguien se adelantó con este regalo 🥺 ¡Elige otro!");
       } else {
@@ -789,7 +808,7 @@ $('#mOk').addEventListener('click', async () => {
     /* Sin API: el pedido llega por WhatsApp y los papás actualizan la lista */
     const msg = "Hola 🧸 Quiero separar un regalo para el Baby Shower de Franco:\n\n" +
       "🎁 " + regaloActual.n + "\n👤 " + nombre + " " + apellido;
-    const url = "https://wa.me/" + WA_NUMERO + "?text=" + encodeURIComponent(msg);
+    const url = "https://wa.me/" + WA_REGALOS + "?text=" + encodeURIComponent(msg);
     cerrarModal();
     toast("Te llevamos a WhatsApp para confirmar tu regalo 💬");
     const w = window.open(url, "_blank");   // dentro del gesto del usuario: no lo bloquea Safari

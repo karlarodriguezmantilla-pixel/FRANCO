@@ -80,12 +80,32 @@ quién lo separó (los nombres solo los ves tú en una hoja de Google):
 
 | Qué | Dónde |
 |---|---|
-| Número de WhatsApp | `const WA_NUMERO = "51950284762";` |
+| WhatsApp de confirmación de asistencia | `const WA_CONFIRMACION = "51950012550";` |
+| WhatsApp de respaldo para regalos | `const WA_REGALOS = "51950284762";` |
 | Dirección del botón «Cómo llegar» | `const DIRECCION = "..."` |
 | Punto del osito en el mapa | `const COORDS = [lat, lng]` (clic derecho en Google Maps → copiar coordenadas) |
-| Fecha para la cuenta regresiva | `new Date("2026-08-22T16:00:00-05:00")` |
-| Regalos (agregar/quitar/marcar) | La lista `const REGALOS = [...]` |
+| Fecha para la cuenta regresiva | `new Date(2026, 7, 22)` (se recalcula sola al abrir la página) |
+| Regalos (agregar/quitar/cupos) | La lista `const REGALOS = [...]` — `t` = cupos, `s` = ya separados |
 
-Los regalos y sus enlaces de compra salieron de tu Excel
-(`Bebé Oso.xlsx`, hoja **LISTA DE REGALOS**), incluyendo los 4 que ya estaban
-separados: cuna corral, colchón, mecedora y coche de paseo.
+## 5 · Actualizar el Apps Script a la VERSIÓN 2 (cupos múltiples)
+
+La versión 2 agrega la columna CANTIDAD: un regalo como los pañales puede
+separarse varias veces hasta llenar sus cupos.
+
+1. Abre tu hoja de Google → **Extensiones → Apps Script**.
+2. Reemplaza TODO el código por el `apps-script/Code.gs` nuevo y guarda (💾).
+3. Ejecuta una vez **`configurarHoja`** (▶). Reconstruye la hoja con las columnas
+   nuevas, crea la hoja **SEPARACIONES** (el registro de quién separó qué) y
+   conserva las separaciones con nombre que ya existieran.
+4. **Implementar → Administrar implementaciones → ✏️ Editar → Versión: "Nueva
+   versión" → Implementar**. ⚠️ NO uses "Nueva implementación": editando la
+   existente, la URL `/exec` no cambia y la página sigue conectada sola.
+
+Mientras no hagas estos pasos no se pierde nada: la página detecta que el
+backend sigue en versión 1 y usa su lista local; las separaciones de los
+invitados llegan por WhatsApp.
+
+Los regalos y sus enlaces salieron de tu Excel (`Bebé Oso.xlsx`, hoja
+**LISTA DE REGALOS**), incluyendo los 5 ya separados (cuna corral, colchón,
+mecedora, coche de paseo y kit de manicura) y los cupos: lanolina ×2,
+sábanas ×2, pañales P ×4, M ×10 y G ×8.
