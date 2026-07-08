@@ -436,23 +436,22 @@
   <div class="reveal">
     <div class="sec-kicker">¿Dónde?</div>
     <h2 class="sec-title">Ubicación</h2>
-    <p class="sec-sub">Mueve el mapa: el osito siempre marca el punto exacto · toca «Cómo llegar» para abrir Google Maps</p>
+    <p class="sec-sub" id="ubiSub">El osito ya sabe dónde será… nosotros lo revelaremos muy pronto 🤫</p>
 
     <div class="map-wrap">
       <div class="map-view">
-        <div id="mapa" class="map-canvas" role="application"
-             aria-label="Mapa de la ubicación: Calle Los Arces 505, Residencial Monteflor II"></div>
+        <div id="mapa" class="map-canvas" role="application" aria-label="Mapa de Arequipa"></div>
       </div>
-      <a class="map-foot" id="mapLink" href="#" target="_blank" rel="noopener" aria-label="Abrir ubicación en Google Maps">
+      <a class="map-foot" id="mapLink" target="_blank" rel="noopener">
         <svg class="pin-ico" width="26" height="26" viewBox="0 0 24 24" fill="none">
           <path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11Z" fill="#6f4e37"/>
           <circle cx="12" cy="10" r="2.8" fill="#fff"/>
         </svg>
         <div>
-          <b>Calle Los Arces 505</b>
-          <small>Residencial Monteflor II · Cayma, Arequipa</small>
+          <b id="ubiTitulo">Será en Arequipa 🤍</b>
+          <small id="ubiDetalle">El lugar exacto es sorpresa… ¡muy atentos!</small>
         </div>
-        <span class="go">Cómo llegar</span>
+        <span class="go" id="ubiGo" style="display:none">Cómo llegar</span>
       </a>
     </div>
   </div>
@@ -567,11 +566,15 @@ const API_URL = "https://script.google.com/macros/s/AKfycbxhJdX4iJQh9H12GVzdYerm
 const WA_CONFIRMACION = "51950012550";  // confirmación de asistencia
 const WA_REGALOS      = "51991006480";  // respaldo para separar regalos sin API
 
-/* DIRECCION alimenta el botón «Cómo llegar»; COORDS es el punto donde se ancla
-   el osito (el mismo que resuelve Google Maps para esa dirección).
-   Para cambiarlo: clic derecho sobre el lugar en Google Maps → copiar coordenadas. */
+/* UBICACIÓN — por ahora en suspenso: el mapa muestra Arequipa con el osito.
+   Cuando el lugar esté definido:
+     1) cambia UBICACION_REVELADA a true
+     2) actualiza DIRECCION y COORDS (clic derecho en Google Maps → copiar coordenadas)
+   y el mapa, la dirección y el botón «Cómo llegar» aparecerán solos. */
+const UBICACION_REVELADA = false;
 const DIRECCION = "Calle Los Arces 505, Residencial Monteflor II, Cayma, Arequipa, Perú";
 const COORDS    = [-16.3815956, -71.5500472];
+const AREQUIPA  = [-16.3989, -71.5350];   // centro de la ciudad, para el suspenso
 const MAPS_URL  = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(DIRECCION);
 
 /* ═══════════════ LISTA DE REGALOS (desde Bebé Oso.xlsx · hoja LISTA DE REGALOS)
@@ -619,11 +622,8 @@ const REGALOS = [
 /* ═══════════════ LÓGICA ═══════════════ */
 const $ = s => document.querySelector(s);
 
-/* — enlaces — */
-$('#mapLink').href = MAPS_URL;
-
-/* — mapa interactivo: el osito es el marcador, anclado a COORDS, así que se
-   mueve junto con el mapa y siempre queda sobre el punto del evento — */
+/* — mapa interactivo: el osito es el marcador. Mientras la ubicación sea
+   sorpresa, flota sobre Arequipa; al revelarla, marca el punto exacto — */
 (function(){
   const OSITO_SVG = `
     <svg viewBox="-27 -71 54 78" width="56" height="81">
@@ -642,16 +642,25 @@ $('#mapLink').href = MAPS_URL;
       <circle cx="-5" cy="-46" r="1.7" fill="#3a2a1c"/>
       <circle cx="5"  cy="-46" r="1.7" fill="#3a2a1c"/>
     </svg>`;
-  const mapa = L.map('mapa', {scrollWheelZoom:false}).setView(COORDS, 17);
+  const centro = UBICACION_REVELADA ? COORDS : AREQUIPA;
+  const mapa = L.map('mapa', {scrollWheelZoom:false}).setView(centro, UBICACION_REVELADA ? 17 : 12);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(mapa);
-  L.marker(COORDS, {
+  L.marker(centro, {
     icon: L.divIcon({className:'oso-marker', html:OSITO_SVG, iconSize:[56,81], iconAnchor:[28,80]}),
     interactive: false,
     keyboard: false
   }).addTo(mapa);
+  if (UBICACION_REVELADA) {
+    $('#mapLink').href = MAPS_URL;
+    $('#mapLink').setAttribute('aria-label', 'Abrir ubicación en Google Maps');
+    $('#ubiSub').textContent = "Mueve el mapa: el osito siempre marca el punto exacto · toca «Cómo llegar» para abrir Google Maps";
+    $('#ubiTitulo').textContent = "Calle Los Arces 505";
+    $('#ubiDetalle').textContent = "Residencial Monteflor II · Cayma, Arequipa";
+    $('#ubiGo').style.display = "";
+  }
 })();
 $('#waBtn').href = "https://wa.me/" + WA_CONFIRMACION + "?text=" +
   encodeURIComponent("Hola 🧸 Deseo confirmar mi asistencia al Baby Shower de Franco 💙");
