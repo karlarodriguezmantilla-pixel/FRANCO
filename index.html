@@ -699,9 +699,12 @@ $('#waBtn').href = "https://wa.me/" + WA_CONFIRMACION + "?text=" +
 })();
 
 /* — animación al hacer scroll — */
+/* threshold:0 + rootMargin: se revela apenas el borde entra al viewport.
+   (Con threshold porcentual, una sección muy alta —46 regalos— nunca alcanza
+   el % visible en un celular y queda invisible pero clickeable.) */
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-}), {threshold:.12});
+}), {threshold:0, rootMargin:'0px 0px -12% 0px'});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* — categorías (se recalculan cuando llega la lista desde Drive) — */
