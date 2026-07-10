@@ -85,27 +85,51 @@ quién lo separó (los nombres solo los ves tú en una hoja de Google):
 | Dirección del botón «Cómo llegar» | `const DIRECCION = "..."` |
 | Punto del osito en el mapa | `const COORDS = [lat, lng]` (clic derecho en Google Maps → copiar coordenadas) |
 | Fecha para la cuenta regresiva | `new Date(2026, 7, 22)` (se recalcula sola al abrir la página) |
-| Regalos (agregar/quitar/cupos) | La lista `const REGALOS = [...]` — `t` = cupos, `s` = ya separados |
+| Regalos | ⚠️ Ya NO se editan aquí: se editan en la **hoja de Google** (ver sección 5). La lista `const REGALOS` del archivo es solo un respaldo si no hay conexión |
 
-## 5 · Actualizar el Apps Script a la VERSIÓN 2 (cupos múltiples)
+## 5 · Actualizar el Apps Script a la VERSIÓN 3 (Drive = fuente única) ⭐
 
-La versión 2 agrega la columna CANTIDAD: un regalo como los pañales puede
-separarse varias veces hasta llenar sus cupos.
+Con la versión 3 la hoja de Google pasa a ser la ÚNICA fuente de la lista:
+la página descarga desde Drive los nombres, categorías, links de compra y
+cupos — al abrirla, cada minuto y al volver a la pestaña. Editas la hoja y
+la página se actualiza sola, sin tocar `index.html` ni subir nada a GitHub.
 
 1. Abre tu hoja de Google → **Extensiones → Apps Script**.
 2. Reemplaza TODO el código por el `apps-script/Code.gs` nuevo y guarda (💾).
-3. Ejecuta una vez **`configurarHoja`** (▶). Reconstruye la hoja con las columnas
-   nuevas, crea la hoja **SEPARACIONES** (el registro de quién separó qué) y
-   conserva las separaciones con nombre que ya existieran.
+3. Ejecuta una vez **`configurarHoja`** (▶). Reconstruye LISTA DE REGALOS con
+   la columna nueva **LINK** y los ítems actualizados del Excel, **conserva
+   todas las separaciones ya hechas** (empareja por nombre del regalo) y
+   **NO toca la hoja SEPARACIONES** (el registro de quién separó qué sigue intacto).
 4. **Implementar → Administrar implementaciones → ✏️ Editar → Versión: "Nueva
    versión" → Implementar**. ⚠️ NO uses "Nueva implementación": editando la
    existente, la URL `/exec` no cambia y la página sigue conectada sola.
 
 Mientras no hagas estos pasos no se pierde nada: la página detecta que el
-backend sigue en versión 1 y usa su lista local; las separaciones de los
-invitados llegan por WhatsApp.
+backend sigue en versión 2, sincroniza solo los cupos y usa su lista local.
 
-Los regalos y sus enlaces salieron de tu Excel (`Bebé Oso.xlsx`, hoja
-**LISTA DE REGALOS**), incluyendo los 5 ya separados (cuna corral, colchón,
-mecedora, coche de paseo y kit de manicura) y los cupos: lanolina ×2,
-sábanas ×2, pañales P ×4, M ×10 y G ×8.
+### Cómo editar la lista desde Drive (después de la versión 3)
+
+En la hoja **LISTA DE REGALOS**:
+
+| Quiero… | Hago… |
+|---|---|
+| Cambiar nombre, categoría, link o cupos | Edito la celda y listo |
+| Agregar un regalo | Nueva fila con el siguiente ID libre |
+| Quitar un regalo | Elimino la fila |
+| Marcar separado a mano | Subo el número en SEPARADOS |
+
+Los cambios aparecen en la página en ~1 minuto (o al recargarla).
+La hoja **SEPARACIONES** es solo el registro privado de quién separó qué.
+
+## 6 · Novedades de la lista (Bebé Oso.xlsx · 9-jul-2026)
+
+Ítems nuevos: colchón para cama Montessori 1.5 plz, funda de colchón
+impermeable, aspirador nasal Momcozy, pack toallas húmedas + Cicaplast (×3),
+extractor manual de leche, toallas húmedas (×10), mochila pañalera, cooler
+bag de lactancia y extractor nasal. La cama Montessori ahora tiene link y el
+protector impermeable pasó a ×2 (fila duplicada en el Excel).
+
+> 📝 OJO: el Excel trae «ASPIRADOR NASAL MOMCOZY» y «EXTRACTOR NASAL» con el
+> MISMO link (son el mismo producto). Se incluyeron ambos por fidelidad al
+> Excel; si sobra uno, elimina su fila en la hoja de Google y desaparecerá
+> de la página solo.

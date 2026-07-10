@@ -577,21 +577,28 @@ const COORDS    = [-16.3815956, -71.5500472];
 const AREQUIPA  = [-16.3989, -71.5350];   // centro de la ciudad, para el suspenso
 const MAPS_URL  = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(DIRECCION);
 
-/* ═══════════════ LISTA DE REGALOS (desde Bebé Oso.xlsx · hoja LISTA DE REGALOS)
-   t = cuántas veces puede separarse (ej. pañales) · s = veces ya separado ═══════════════ */
+/* ═══════════════ LISTA DE REGALOS ═══════════════
+   La FUENTE ÚNICA es la hoja de Google (Drive): la página descarga de ahí
+   nombres, categorías, links y cupos al abrir, cada minuto y al volver a la
+   pestaña. Esta copia local (Bebé Oso.xlsx · 9-jul-2026) solo se usa como
+   respaldo si no hay conexión con el Apps Script.
+   t = cuántas veces puede separarse (ej. pañales) · s = veces ya separado */
 const REGALOS = [
-  {id:1,  n:"SET BIBERONES",                                        c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", t:1, s:0},
-  {id:2,  n:"SILLA DE COMER BEBE ESCRITORIO 3 EN 1 PRIORI",         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/883501696/silla-de-comer-bebe-escritorio-3-en-1-tango-priori/883501698", t:1, s:0},
+  {id:1,  n:"SET BIBERONES",                                        c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", t:1, s:1},
+  {id:2,  n:"SILLA DE COMER BEBE ESCRITORIO 3 EN 1 PRIORI",         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/883501696/silla-de-comer-bebe-escritorio-3-en-1-tango-priori/883501698", t:1, s:1},
   {id:3,  n:"TERMO CARESTINO 1200 ML FRIO/CALOR",                   c:"Alimentación", u:"https://www.carestino.com.pe/producto/termo-carestino-1200ml-frio-calor-blanco/", t:1, s:0},
-  {id:4,  n:"BIBERON DE VIDRIO",                                    c:"Alimentación", u:"https://infanti.com.pe/products/biberon-natural-response-3-0-125ml-flow-2-0m?variant=48241124278572", t:1, s:0},
+  {id:4,  n:"BIBERON DE VIDRIO",                                    c:"Alimentación", u:"https://infanti.com.pe/products/biberon-natural-response-3-0-125ml-flow-2-0m?variant=48241124278572", t:1, s:1},
   {id:5,  n:"CHUPON AVENT",                                         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/149467547/chupon-avent-0-6m-ultra-aereado-x-2-uni-estuche-nino/149467548", t:1, s:0},
-  {id:6,  n:"PACK CUIDADO EUCERIN",                                 c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", t:1, s:0},
-  {id:7,  n:"BODY LOTION ISDIN",                                    c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", t:1, s:0},
+  {id:6,  n:"PACK CUIDADO EUCERIN",                                 c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", t:1, s:1},
+  {id:7,  n:"BODY LOTION ISDIN",                                    c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", t:1, s:1},
   {id:8,  n:"REDUCTOR DE INODORO CON ESCALERA",                     c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", t:1, s:0},
-  {id:9,  n:"CAMA MONTESSORI",                                      c:"Cuarto",       u:"", t:1, s:0},
+  {id:9,  n:"CAMA MONTESSORI",                                      c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/142638094/CAMA-MONTESSORI-EVOLUTIVA-DESARMABLE-1.5-PLZ/142638095", t:1, s:0},
+  {id:38, n:"COLCHON PARA CAMA MONTESSORI 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/13892160/colchon-royal-prince-firme-1-5-plz-1-almohada-protector/13892160", t:1, s:0},
+  {id:39, n:"FUNDA DE COLCHON IMPERMEABLE 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/145935110/Funda-De-Colchon-Impermeable-Hypno-de-Bambu-Con-Cierre-Bl/145935118", t:1, s:0},
   {id:10, n:"CUNA CORRAL",                                          c:"Cuarto",       u:"", t:1, s:1},
   {id:11, n:"COLCHON PARA CUNA CORRAL",                             c:"Cuarto",       u:"", t:1, s:1},
   {id:12, n:"EDREDON PARA CUNA CORRAL",                             c:"Cuarto",       u:"https://www.carestino.com.pe/producto/edredon-para-cuna-corral-de-70x104cm-blanco/", t:1, s:0},
+  {id:40, n:"ASPIRADOR NASAL MOMCOZY",                              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/80070854/aspirador-nasal-electrico-momcozy/80070854", t:1, s:0},
   {id:13, n:"ESCALERA INFANTIL MULTIFUNCION",                       c:"Cuarto",       u:"https://www.carestino.com.pe/producto/escalera-infantil-multifuncion-daily-v2-gris/", t:1, s:0},
   {id:14, n:"MECEDORA ELECTRICA DE BEBE",                           c:"Cuarto",       u:"", t:1, s:1},
   {id:15, n:"CREMA LANOLINA 40GR LANSINOH",                         c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/120796092/Crema-Lanolina-40gr-Lansinoh/120796094", t:2, s:0},
@@ -601,22 +608,28 @@ const REGALOS = [
   {id:19, n:"SILLA DE AUTO MONZA",                                  c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", t:1, s:0},
   {id:20, n:"BATA OSO 2-4 AÑOS",                                    c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", t:1, s:0},
   {id:21, n:"ESTERILIZADOR DE BIBERONES",                           c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/126491583/CALENTADOR-DE-BIBERONES-4-EN-1-PREMIUM-Y-ESTERILIZADOR/126491586", t:1, s:0},
-  {id:22, n:"COJIN DE LACTANCIA",                                   c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/128116235/Cojin-de-Lactancia-Con-Funda-Premium-Grafito/128116236", t:1, s:0},
+  {id:22, n:"COJIN DE LACTANCIA",                                   c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/128116235/Cojin-de-Lactancia-Con-Funda-Premium-Grafito/128116236", t:1, s:1},
   {id:23, n:"MEDIA DE CONTROL DE MONITOREO DE FRECUENCIA CARDIACA", c:"Cuidado",      u:"https://shop.sense-u.com/en-saf/products/sense-u-smart-sock-shoe", t:1, s:0},
   {id:24, n:"KIT DE MANICURA",                                      c:"Cuidado",      u:"", t:1, s:1},
-  {id:25, n:"BAÑERA CON CAMBIADOR PLEGABLE",                        c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/140682567/Banera-Cambiador-y-Organizador-Desmontable-con-Drenaje-Spark/140682568", t:1, s:0},
+  {id:25, n:"BAÑERA CON CAMBIADOR PLEGABLE",                        c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/140682567/Banera-Cambiador-y-Organizador-Desmontable-con-Drenaje-Spark/140682568", t:1, s:1},
   {id:26, n:"EXTRACTOR DE LECHE ELECTRICO",                         c:"Mamá",         u:"https://www.falabella.com.pe/falabella-pe/product/20704098/extractor-portatil-m9-doble-succion/20704098", t:1, s:0},
   {id:27, n:"HUMIDIFICADOR SMART",                                  c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/154851043/humidificador-xiaomi-smart-humidifier-2-uv-c-4-5l-350ml-h-32db-difusor-aromas-wifi-mi-home/154851044", t:1, s:0},
-  {id:28, n:"CAMARA C500 DUAL XIAOMI",                              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", t:1, s:0},
+  {id:28, n:"CAMARA C500 DUAL XIAOMI",                              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", t:1, s:1},
   {id:29, n:"GIMNASIO DIDACTICO CARESTINO",                         c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", t:1, s:0},
   {id:30, n:"BOLSA DE DORMIR OSITO",                                c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", t:1, s:0},
   {id:31, n:"SABANAS PARA CUNA",                                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", t:2, s:0},
-  {id:32, n:"PROTECTOR IMPERMEABLE PARA COLCHON",                   c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", t:1, s:0},
-  {id:33, n:"MANTA SHERPA",                                         c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/155133463/manta-premium-de-sherpa-para-bebes-y-ninos-suavidad-y-abrigo-excepcional-frazada/155133464", t:1, s:0},
+  {id:32, n:"PROTECTOR IMPERMEABLE PARA COLCHON",                   c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", t:2, s:0},
+  {id:33, n:"MANTA SHERPA",                                         c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/155133463/manta-premium-de-sherpa-para-bebes-y-ninos-suavidad-y-abrigo-excepcional-frazada/155133464", t:1, s:1},
   {id:34, n:"SET DE ALIMENTACION DE SILICONA",                      c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/153401695/set-de-alimentacion-para-bebe-de-silicona-antideslizante-9-piezas-verde-libre-de-bpa/153401696", t:1, s:0},
-  {id:35, n:"PAÑALES HUGGIES NATURAL CARE TALLA P",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panal-huggies-unisex-talla-p-natural-care/010472", t:4, s:0},
+  {id:35, n:"PAÑALES HUGGIES NATURAL CARE TALLA P",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panal-huggies-unisex-talla-p-natural-care/010472", t:4, s:1},
   {id:36, n:"PAÑALES HUGGIES NATURAL CARE TALLA M",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-natural-care-m-60un/011390", t:10, s:0},
   {id:37, n:"PAÑALES HUGGIES NATURAL CARE TALLA G",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-g-bigpack-natural-care-bolsa-66-un/036335", t:8, s:0},
+  {id:41, n:"PACK TOALLAS HUMEDAS + CICAPLAST BAUME B5",            c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/pack-toallas-humedas-huggies-crema-cicaplast-baume/PACKDB810", t:3, s:0},
+  {id:42, n:"EXTRACTOR MANUAL DE LECHE",                            c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/16974146/extractor-manual-de-leche-240ml-nuby/16974146", t:1, s:0},
+  {id:43, n:"TOALLAS HUMEDAS",                                      c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/toalla-humeda-babysec-super-premium-99-agua/078910", t:10, s:0},
+  {id:44, n:"MOCHILA PAÑALERA",                                     c:"Paseo",        u:"https://www.carestino.com.pe/producto/mochila-panialera-boston-negro-melange/", t:1, s:0},
+  {id:45, n:"COOLER BAG DE LACTANCIA",                              c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/152937271/cooler-bag-de-lactancia-conservador-de-leche-materna-incluye-2-bloques-de-hielo-con-gel/152937272", t:1, s:0},
+  {id:46, n:"EXTRACTOR NASAL",                                      c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/80070854/aspirador-nasal-electrico-momcozy/80070854", t:1, s:0},
 ];
 
 /* ═══════════════ LÓGICA ═══════════════ */
@@ -687,9 +700,14 @@ const io = new IntersectionObserver(es => es.forEach(e => {
 }), {threshold:.12});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-/* — categorías — */
-const CATS = ["Todos", ...new Set(REGALOS.map(r => r.c))];
+/* — categorías (se recalculan cuando llega la lista desde Drive) — */
+let CATS = [];
 let catActiva = "Todos";
+function calcCats(){
+  CATS = ["Todos", ...new Set(REGALOS.map(r => r.c))];
+  if (!CATS.includes(catActiva)) catActiva = "Todos";
+}
+calcCats();
 
 function renderCats(){
   $('#cats').innerHTML = CATS.map(c =>
@@ -724,17 +742,28 @@ function renderGifts(){
 }
 renderCats(); renderGifts();
 
-/* — estados en vivo (si hay API v2) —
-   Solo se aceptan respuestas v:2 (formato con cupos). Si el Apps Script aún es
-   la versión anterior, la página usa la lista local y separa por WhatsApp. */
-let apiV2Ok = false;
-async function cargarEstados(){
+/* — lista en vivo desde Drive (fuente única) —
+   El Apps Script v3 devuelve la lista COMPLETA leída de la hoja de Google:
+   nombres, categorías, links y cupos. Cualquier edición en Drive se refleja
+   aquí al abrir la página, cada minuto y al volver a la pestaña.
+   Compatibilidad: si el backend aún es v2 solo se sincronizan los cupos;
+   sin conexión, se usa la copia local y se separa por WhatsApp. */
+let apiOk = false;
+async function cargarLista(){
   if (!API_URL) return;
   try {
-    const res = await fetch(API_URL + "?v=2");
+    const res = await fetch(API_URL + "?v=3");
     const data = await res.json();
-    if (data && data.ok && data.v === 2 && data.estados) {
-      apiV2Ok = true;
+    if (data && data.ok && data.v >= 3 && Array.isArray(data.lista) && data.lista.length) {
+      apiOk = true;
+      REGALOS.splice(0, REGALOS.length, ...data.lista.map(r => ({
+        id: Number(r.id), n: String(r.n), c: String(r.c || "Otros"),
+        u: String(r.u || ""), t: Number(r.t) || 1, s: Number(r.s) || 0
+      })));
+      if (regaloActual) regaloActual = REGALOS.find(r => r.id === regaloActual.id) || regaloActual;
+      calcCats(); renderCats(); renderGifts();
+    } else if (data && data.ok && data.v === 2 && data.estados) {
+      apiOk = true;
       REGALOS.forEach(r => {
         const e = data.estados[r.id];
         if (e) { r.s = Number(e.s) || 0; if (e.t) r.t = Number(e.t); }
@@ -743,7 +772,11 @@ async function cargarEstados(){
     }
   } catch(e) { /* sin conexión: se mantiene la lista local */ }
 }
-cargarEstados();
+cargarLista();
+setInterval(cargarLista, 60000);                       // refresco cada minuto
+document.addEventListener('visibilitychange', () => {  // y al volver a la pestaña
+  if (!document.hidden) cargarLista();
+});
 
 /* — modal — */
 let regaloActual = null;
@@ -784,7 +817,7 @@ $('#mOk').addEventListener('click', async () => {
   }
   if (!regaloActual) return;
 
-  if (API_URL && apiV2Ok) {
+  if (API_URL && apiOk) {
     $('#mOk').disabled = true;
     $('#mOk').textContent = "Separando…";
     try {
