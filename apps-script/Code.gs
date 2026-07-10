@@ -154,10 +154,11 @@ function normalizar(s) {
  */
 function doGet() {
   const hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(NOMBRE_HOJA);
-  const salida = { ok: false, v: 3, lista: [] };
+  const salida = { ok: false, v: 3, conLink: false, lista: [] };
   if (hoja && hoja.getLastRow() > 1) {
     const cab = hoja.getRange(1, 1, 1, hoja.getLastColumn()).getValues()[0].map(String);
     const conLink = cab[3] && cab[3].toUpperCase().indexOf("LINK") === 0;
+    salida.conLink = !!conLink;   // avisa a la página si la hoja ya tiene columna LINK
     const datos = hoja.getRange(2, 1, hoja.getLastRow() - 1, conLink ? 6 : 5).getValues();
     datos.forEach(function (f) {
       if (!f[0] || !f[1]) return;

@@ -632,6 +632,10 @@ const REGALOS = [
   {id:46, n:"EXTRACTOR NASAL",                                      c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/80070854/aspirador-nasal-electrico-momcozy/80070854", t:1, s:0},
 ];
 
+/* Copia de los links locales: si la hoja de Drive aún no tiene columna LINK,
+   la página los usa para que los botones «Ver referencia» no desaparezcan. */
+const LINKS_LOCALES = new Map(REGALOS.map(r => [r.id, r.u]));
+
 /* ═══════════════ LÓGICA ═══════════════ */
 const $ = s => document.querySelector(s);
 
@@ -758,7 +762,8 @@ async function cargarLista(){
       apiOk = true;
       REGALOS.splice(0, REGALOS.length, ...data.lista.map(r => ({
         id: Number(r.id), n: String(r.n), c: String(r.c || "Otros"),
-        u: String(r.u || ""), t: Number(r.t) || 1, s: Number(r.s) || 0
+        u: String(r.u || "") || (data.conLink ? "" : (LINKS_LOCALES.get(Number(r.id)) || "")),
+        t: Number(r.t) || 1, s: Number(r.s) || 0
       })));
       if (regaloActual) regaloActual = REGALOS.find(r => r.id === regaloActual.id) || regaloActual;
       calcCats(); renderCats(); renderGifts();
